@@ -2,8 +2,16 @@
 require_once "../vendor/autoload.php";
 use GuzzleHttp\Client;
 
-class fetch
-{
+class storage{
+  public $title;
+  public $body;
+  public $explore_more;
+  public $image_content;
+}
+  
+
+class output{
+  public $arr = array();
   function fetch_data($url)
   {
     $client = new Client();
@@ -12,27 +20,27 @@ class fetch
     $arr_body = json_decode($body, true);
     return $arr_body;
   }
-}
-class output{
-  function print_data($arr_body){
-    $arr = array();
+
+  function print_data(){
+   
     
     for($i=0;$i<16;$i++){
+      $obj_data = new storage();
+      $url = 'https://ir-dev-d9.innoraft-sites.com/jsonapi/node/services';
+      $arr_body = $this->fetch_data($url);
+      
       if($arr_body['data'][$i]['attributes']['field_services']!=NULL){
-        $title = $arr_body['data'][$i]['attributes']['title'];
-        array_push($arr,$title) ;
-        $body = $arr_body['data'][$i]['attributes']['field_services']['processed'];
-        array_push($arr,$body) ;
-        $store = $arr_body['data'][$i]['relationships']['field_image']['links']['related']['href'];
-        $image = new fetch();
-        $image_body = $image->fetch_data($store);
-        $image_content = 'https://ir-dev-d9.innoraft-sites.com'.$image_body['data']['attributes']['uri']['url'];
-        array_push($arr,$image_content);
+        $obj_data->title = $arr_body['data'][$i]['attributes']['title'];
+        $obj_data->body = $arr_body['data'][$i]['attributes']['field_services']['processed'];
         $explore = $arr_body['data'][$i]['attributes']['path']['alias'];
-        $explore_more = 'https://ir-dev-d9.innoraft-sites.com'.$explore;
-        array_push($arr,$explore_more);
+        $obj_data->explore_more = 'https://ir-dev-d9.innoraft-sites.com'.$explore;
+        $store = $arr_body['data'][$i]['relationships']['field_image']['links']['related']['href'];
+        $image_body = $this->fetch_data($store);
+        $obj_data->image_content = 'https://ir-dev-d9.innoraft-sites.com'.$image_body['data']['attributes']['uri']['url'];
+        array_push($this->arr,$obj_data);
+        
       }
     } 
-    return $arr;
+    return $this->arr;
   }
 }
