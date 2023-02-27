@@ -44,3 +44,30 @@ class output{
     return $this->arr;
   }
 }
+
+class validate
+{
+    function validate_email($em)
+    {
+
+        $client = new Client([
+            // Base URI is used with relative requests
+            'base_uri' => 'https://api.apilayer.com'
+        ]);
+        $response = $client->request('GET', 'email_verification/check?email=' . $em, [
+            'headers' => [
+                'apikey' => '6lqXAXAXlgwac06C28c0iHsgZn47lrCy',
+            ]
+        ]);
+
+        $body = $response->getBody();
+        $arr_body = json_decode($body);
+        if ($arr_body->format_valid && $arr_body->smtp_check) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+?>
