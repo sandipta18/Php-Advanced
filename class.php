@@ -28,6 +28,9 @@ class output{
         $image_body = $image->fetch_data($store);
         $image_content = 'https://ir-dev-d9.innoraft-sites.com'.$image_body['data']['attributes']['uri']['url'];
         array_push($arr,$image_content);
+        $explore = $arr_body['data'][$i]['attributes']['path']['alias'];
+        $explore_more = 'https://ir-dev-d9.innoraft-sites.com'.$explore;
+        array_push($arr,$explore_more);
       }
     } 
     return $arr;
