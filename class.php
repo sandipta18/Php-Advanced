@@ -2,16 +2,64 @@
 require_once "../vendor/autoload.php";
 use GuzzleHttp\Client;
 
+/**
+ * [Description storage]
+ * Class storage is used to store all the variables
+ */
 class storage{
+  
+  /**
+   * [Description for $title]
+   *
+   * @var string
+   */
   public $title;
+  /**
+   * [Description for $body]
+   *
+   * @var string]
+   */
   public $body;
+ 
+  /**
+   * [Description for $explore_more]
+   *
+   * @var string
+   */
   public $explore_more;
+  /**
+   * [Description for $image_content]
+   *
+   * @var string
+   */
   public $image_content;
 }
   
 
+/**
+ * [Description output]
+ * @method fetch_data
+ * fetch_data will be used for retrieving the data by calling the api
+ * @method print_data
+ * print_data will be used for retrieving individual data and storing them 
+ * inside an array and returning it
+ */
 class output{
+  /**
+   * [Description for $arr]
+   *
+   * @var array
+   */
   public $arr = array();
+  /**
+   * [Description for fetch_data]
+   * fetching data by calling the api
+   *
+   * @param mixed $url
+   * 
+   * @return array
+   * 
+   */
   function fetch_data($url)
   {
     $client = new Client();
@@ -21,6 +69,14 @@ class output{
     return $arr_body;
   }
 
+  /**
+   * [Description for print_data]
+   * Will be used to store individual data 
+   * and returning the array consisting of data
+   *
+   * @return [type]
+   * 
+   */
   function print_data(){
    
     
@@ -45,8 +101,20 @@ class output{
   }
 }
 
+/**
+ * [Description validate]
+ */
 class validate
 {
+    /**
+     * [Description for validate_email]
+     * Email will be verified first using mailboxlayer api which will be called with the help of guzzlehttp
+     * If email is verified true is returned else false is returned
+     * @param mixed $em
+     * 
+     * @return [type]
+     * 
+     */
     function validate_email($em)
     {
 
@@ -64,10 +132,9 @@ class validate
         $arr_body = json_decode($body);
         if ($arr_body->format_valid && $arr_body->smtp_check) {
             return true;
-        } else {
+        }
+         else {
             return false;
         }
     }
 }
-
-?>
