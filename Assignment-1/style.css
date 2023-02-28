@@ -37,13 +37,20 @@ li{
     height: 450px;
 }
 .title{
-    color: #FF7900;
+    font-size: 45px;
     margin-bottom: 15px;
+    background: linear-gradient(to top, #4B5561 40px, #FF7900 53px);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.4;
 }
+
 a{
     text-decoration: none;
-    color: black;
+    color:#4B5561;
     font-size: 18px;
+    font-weight: bolder;
 }
 .explore{
     display: inline-block;
